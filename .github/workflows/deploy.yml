@@ -29,3 +29,5 @@ jobs:
         with:
           personal_token: ${{ secrets.GH_PAT }}
           publish_dir: ./dist
+          external_repository: asksa1256/rolling
+          publish_branch: gh-pages
