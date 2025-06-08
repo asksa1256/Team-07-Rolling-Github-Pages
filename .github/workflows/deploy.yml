@@ -3,17 +3,19 @@ name: Rolling Deploy to GitHub Pages
 on:
   push:
     branches:
-      - develop # 또는 사용 중인 브랜치
+      - develop
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout source code
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false # GITHUB_TOKEN 사용 안 함
 
-      - name: Install Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -22,12 +24,14 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          cp dist/index.html dist/404.html  # SPA 대응
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.GH_PAT }}
-          publish_dir: ./dist
           external_repository: asksa1256/rolling
           publish_branch: gh-pages
+          publish_dir: ./dist
