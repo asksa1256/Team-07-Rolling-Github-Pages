@@ -1681,7 +1681,7 @@ button {
   .empty-message {
     font-size: var(--font-size-18);
   }
-`,wy=R.createContext(void 0),Vd=()=>{const i=R.useContext(wy);if(!i)throw new Error("useModal은 ModalProvider 안에서만 호출되어야 합니다.");return i},Vt=({children:i,visible:e})=>A("div",{css:X9,className:`modal ${e?"visible":""}`,children:i}),G9=({children:i})=>A("div",{css:Z9,children:i}),V9=({children:i})=>A("div",{css:J9,children:i}),K9=({children:i})=>A("div",{css:e5,children:i}),Y9=()=>A("hr",{css:Q9});Vt.header=G9;Vt.body=V9;Vt.actions=K9;Vt.divider=Y9;const X9=Q`
+`,wy=R.createContext(void 0),Vd=()=>{const i=R.useContext(wy);if(!i)throw new Error("useModal은 ModalProvider 안에서만 호출되어야 합니다.");return i},Vt=({children:i,visible:e})=>A("div",{css:X9,className:`modal ${e?"visible":""}`,children:i}),G9=({children:i,...e})=>A("div",{css:Z9,...e,children:i}),V9=({children:i})=>A("div",{css:J9,children:i}),K9=({children:i,...e})=>A("div",{css:e5,...e,children:i}),Y9=()=>A("hr",{css:Q9});Vt.header=G9;Vt.body=V9;Vt.actions=K9;Vt.divider=Y9;const X9=Q`
   position: relative;
   width: 100%;
   max-width: calc(100% - 40px);
@@ -2117,27 +2117,27 @@ ${Jd(this.code(e,n))}
   font-size: var(--font-size-14);
   margin-top: 8px;
   color: var(--error);
-`,MT=()=>{const[i,e]=R.useState(window.innerWidth);return R.useEffect(()=>{const n=()=>e(window.innerWidth);return window.addEventListener("resize",n),()=>window.removeEventListener("resize",n)},[]),i},OT=({sort:i="",limit:e=6})=>{const{id:n}=yo(),[a,s]=R.useState([]),[l,d]=R.useState(0),[c,u]=R.useState(!1),[m,p]=R.useState(!1),[k,y]=R.useState(""),w=R.useCallback(async()=>{if(!(m||c)){p(!0);try{const{results:b}=await Ed({id:n,offset:l,limit:e,sort:i});s(S=>[...S,...b]),d(S=>S+b.length),b.length<e&&u(!0),y("")}catch(b){console.error("메시지를 불러오지 못했습니다:",b),y("등록되어 있지 않은 사용자 ID입니다."),u(!0)}finally{p(!1)}}},[n,l,c,m,i,e]);return{messages:a,setMessages:s,fetchMore:w,isLast:c,loading:m,error:k}},PT=async({id:i,team:e=pr})=>await Ud(`https://rolling-api.vercel.app/${ss}-${pr}/messages/${i}/`,{method:"DELETE"}),IT=async({id:i})=>{const e=`https://rolling-api.vercel.app/${ss}-${pr}/recipients/${i}/`;return await Ud(e)},FT=i=>{const[e,n]=R.useState([]);return R.useEffect(()=>{i&&(async()=>{const s=await Ed({id:i,limit:200});n(s.results)})()},[i]),{allMessages:e,setAllMessages:n}},zT=()=>{const{id:i}=yo(),e=ds(),n=!!R3("/post/:id/edit"),[a,s]=R.useState([]),{showModal:l}=Vd(),{messages:d,setMessages:c,fetchMore:u,isLast:m,error:p}=OT({limit:n?6:5}),{allMessages:k,setAllMessages:y}=FT(i),[w,b]=R.useState(""),[S,C]=R.useState(null);R.useEffect(()=>{i&&(async()=>{try{const I=await IT({id:i});C(I)}catch(I){console.error("recipient 로딩 실패",I),b("수신인 정보를 불러오는 데 실패했습니다.")}})()},[i]);const T=()=>{const x=`/post/${i}`;e(n?x:`${x}/edit`)},M=R.useCallback(x=>{s(I=>I.includes(x)?I.filter(j=>j!==x):[...I,x])},[]);return{recipient:S,recipientId:i,editMode:n,selectedIds:a,setSelectedIds:s,toggleSelection:M,messages:d,setMessages:c,allMessages:k,setAllMessages:y,showModal:l,fetchMore:u,isLast:m,error:p||w,handleEditButton:T,handleDeleteSelected:async()=>{try{await Promise.all(a.map(x=>PT({id:x}))),c(x=>x.filter(I=>!a.includes(I.id))),y==null||y(x=>x.filter(I=>!a.includes(I.id))),s([])}catch(x){console.error("삭제 실패",x),b("메시지 삭제 중 문제가 발생했습니다.")}},handleToggleSelectAll:()=>{const x=d.map(I=>I.id);a.length>0?s([]):s(x)}}},DT=({children:i})=>{const e=zT();return A(ty.Provider,{value:e,children:i})},BT=({ref:i,callback:e,isLast:n})=>{R.useEffect(()=>{if(!i.current||n)return;const a=new IntersectionObserver(([s])=>{s.isIntersecting&&e()},{threshold:1,rootMargin:"100px 0px"});return a.observe(i.current),()=>a.disconnect()},[i,e,n])};function $T({count:i,onConfirm:e,onCancel:n}){return le("div",{css:jT,children:[le(Vt.header,{css:qT,children:[i,"개 항목을 삭제하시겠습니까?"]}),le(Vt.actions,{css:HT,children:[A(Qe,{variant:"primary",size:"md",onClick:n,css:Ig,children:"취소"}),A(Qe,{variant:"primary",size:"md",onClick:e,css:Ig,children:"확인"})]})]})}const jT=Q`
-  width: 400px;
+`,MT=()=>{const[i,e]=R.useState(window.innerWidth);return R.useEffect(()=>{const n=()=>e(window.innerWidth);return window.addEventListener("resize",n),()=>window.removeEventListener("resize",n)},[]),i},OT=({sort:i="",limit:e=6})=>{const{id:n}=yo(),[a,s]=R.useState([]),[l,d]=R.useState(0),[c,u]=R.useState(!1),[m,p]=R.useState(!1),[k,y]=R.useState(""),w=R.useCallback(async()=>{if(!(m||c)){p(!0);try{const{results:b}=await Ed({id:n,offset:l,limit:e,sort:i});s(S=>[...S,...b]),d(S=>S+b.length),b.length<e&&u(!0),y("")}catch(b){console.error("메시지를 불러오지 못했습니다:",b),y("등록되어 있지 않은 사용자 ID입니다."),u(!0)}finally{p(!1)}}},[n,l,c,m,i,e]);return{messages:a,setMessages:s,fetchMore:w,isLast:c,loading:m,error:k}},PT=async({id:i,team:e=pr})=>await Ud(`https://rolling-api.vercel.app/${ss}-${pr}/messages/${i}/`,{method:"DELETE"}),IT=async({id:i})=>{const e=`https://rolling-api.vercel.app/${ss}-${pr}/recipients/${i}/`;return await Ud(e)},FT=i=>{const[e,n]=R.useState([]);return R.useEffect(()=>{i&&(async()=>{const s=await Ed({id:i,limit:200});n(s.results)})()},[i]),{allMessages:e,setAllMessages:n}},zT=()=>{const{id:i}=yo(),e=ds(),n=!!R3("/post/:id/edit"),[a,s]=R.useState([]),{showModal:l}=Vd(),{messages:d,setMessages:c,fetchMore:u,isLast:m,error:p}=OT({limit:n?6:5}),{allMessages:k,setAllMessages:y}=FT(i),[w,b]=R.useState(""),[S,C]=R.useState(null);R.useEffect(()=>{i&&(async()=>{try{const I=await IT({id:i});C(I)}catch(I){console.error("recipient 로딩 실패",I),b("수신인 정보를 불러오는 데 실패했습니다.")}})()},[i]);const T=()=>{const x=`/post/${i}`;e(n?x:`${x}/edit`)},M=R.useCallback(x=>{s(I=>I.includes(x)?I.filter(j=>j!==x):[...I,x])},[]);return{recipient:S,recipientId:i,editMode:n,selectedIds:a,setSelectedIds:s,toggleSelection:M,messages:d,setMessages:c,allMessages:k,setAllMessages:y,showModal:l,fetchMore:u,isLast:m,error:p||w,handleEditButton:T,handleDeleteSelected:async()=>{try{await Promise.all(a.map(x=>PT({id:x}))),c(x=>x.filter(I=>!a.includes(I.id))),y==null||y(x=>x.filter(I=>!a.includes(I.id))),s([])}catch(x){console.error("삭제 실패",x),b("메시지 삭제 중 문제가 발생했습니다.")}},handleToggleSelectAll:()=>{const x=d.map(I=>I.id);a.length>0?s([]):s(x)}}},DT=({children:i})=>{const e=zT();return A(ty.Provider,{value:e,children:i})},BT=({ref:i,callback:e,isLast:n})=>{R.useEffect(()=>{if(!i.current||n)return;const a=new IntersectionObserver(([s])=>{s.isIntersecting&&e()},{threshold:1,rootMargin:"100px 0px"});return a.observe(i.current),()=>a.disconnect()},[i,e,n])};function $T({count:i,onConfirm:e,onCancel:n}){return le("div",{css:jT,children:[le(Vt.header,{css:qT,children:["선택한 ",i,"개의 항목을 삭제하시겠습니까?"]}),le(Vt.actions,{css:HT,children:[A(Qe,{variant:"primary",size:"md",onClick:n,css:Ig,children:"취소"}),A(Qe,{variant:"primary",size:"md",onClick:e,css:Ig,children:"확인"})]})]})}const jT=Q`
+  width: 100%;
   height: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   align-items: center;
-  gap: 16px;         /* ← header와 actions 사이 16px 간격 */
+  gap: 30px; /* ← header와 actions 사이 16px 간격 */
 `,qT=Q`
-  font-size: 1.125rem;     /* 18px */
+  font-size: 1.5rem;
   font-weight: 500;
   color: var(--gray-900);
-  text-align: center;      
+  text-align: center;
 `,HT=Q`
   display: flex;
   justify-content: center;
-  gap: 16px;         /* 버튼들 사이 간격 */
- `,Ig=Q`
-  width: 100px;            
-  height: 40px;            
+  gap: 8px; /* 버튼들 사이 간격 */
+`,Ig=Q`
+  width: 100px;
+  height: 40px;
   border-radius: 8px;
   font-size: 1rem;
 `,UT=()=>{const{editMode:i,selectedIds:e,handleDeleteSelected:n,handleEditButton:a,handleToggleSelectAll:s,setSelectedIds:l}=gh(),{showModal:d,hideModal:c}=Vd(),{showToast:u}=R.useContext(mh),m=R.useRef(i),p=()=>{const k=d(A($T,{count:e.length,onCancel:()=>c(k),onConfirm:async()=>{c(k);try{await n(),u({state:"success",message:"삭제되었습니다."})}catch{u({state:"error",message:"삭제에 실패했습니다."})}}}))};return R.useEffect(()=>{m.current!==i&&(u({state:"success",message:i?"편집 모드를 시작했습니다.":"편집 모드를 종료했습니다."}),i||l([]),m.current=i)},[i]),A("div",{css:WT,children:i?le(Vr,{children:[A(Qe,{onClick:s,children:e.length>0?"🔽 전체 해제":"🔼 전체 선택"}),le(Qe,{onClick:p,disabled:!e.length,children:["🗑 선택 삭제 (",e.length,"개)"]}),A(Qe,{onClick:a,children:"❌ 편집 종료"})]}):A(Qe,{onClick:a,children:"✏️ 편집하기"})})},WT=Q`
